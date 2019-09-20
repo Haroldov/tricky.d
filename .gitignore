@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/tricky-d
+tricky-d.so
+tricky-d.dylib
+tricky-d.dll
+tricky-d.a
+tricky-d.lib
+tricky-d-test-*
+*.exe
+*.o
+*.obj
+*.lst
