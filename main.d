@@ -124,12 +124,10 @@ void main()
 		  break;
 		}
 		x--;
-		writef("%d", yn);
 		if (yn >= 'a')
 		  y = yn - 'a';
 		else
 		  y = yn - 'A';
-		writef("%d", y);
 		writef("\n");
 		if (board[x][y] == ' ')
 		  board[x][y] = player;
