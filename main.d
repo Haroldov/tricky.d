@@ -1,5 +1,5 @@
 import std.stdio;
-
+import std.conv : ConvException;
 
 /* Function: tricky_check */
 /* WINNING CONDITIONS */
@@ -31,7 +31,7 @@ char tricky_check(char[3][3] new_board)
 	{
 		return (new_board[2][0]);
 	}
-	return ('0');
+	return (' ');
 }
 
 /* Function: tricky_fill */
@@ -46,23 +46,37 @@ void tricky_fill(char plays, char** new_board)
 /* --------------------- */
 void tricky_show(char[3][3] board)
 {
-	writef("\t____________________\n");
-	writef("\t|%c", board[0][0]);
-	writef("\t|%c", board[0][1]);
-	writef("\t|%c\n", board[0][2]);
+	writef("\t_________________________________________________\n");
+	writef("\t|\t%c", board[0][0]);
+	writef("\t|\t%c", board[0][1]);
+	writef("\t|\t%c\t|\n", board[0][2]);
+	writef("\t_________________________________________________\n");
 
-	writef("\t|%c", board[1][0]);
-	writef("\t|%c", board[1][1]);
-	writef("\t|%c\n", board[1][2]);
+	writef("\t|\t%c", board[1][0]);
+	writef("\t|\t%c", board[1][1]);
+	writef("\t|\t%c\t|\n", board[1][2]);
+	writef("\t_________________________________________________\n");
 
-	writef("\t|%c", board[2][0]);
-	writef("\t|%c", board[2][1]);
-	writef("\t|%c\n", board[2][2]);
+	writef("\t|\t%c", board[2][0]);
+	writef("\t|\t%c", board[2][1]);
+	writef("\t|\t%c\t|\n", board[2][2]);
+	writef("\t_________________________________________________\n");
 
-	writef("Hello, World!\n");
-	writef("mark = %c\n", board[2][2]);
-	writef("positions = %s\n", board);
+}
 
+/* Function: check_table */
+/* Return 1 if full otherwise 0 */
+/* --------------------- */
+int check_table(char[3][3] board)
+{
+  int i, j;
+  for (i = 0; i < 3; i++)
+    for (j = 0; j < 3; j++)
+    {
+      if (board[i][j] == ' ')
+	return 0;
+    }
+  return 1;
 }
 
 /* Function: tricky_main */
@@ -71,51 +85,56 @@ void main()
 {
 	char plays = 1;
 	char[3][3] board;
-	int winner = 0;
+	char winner = ' ';
+	int x, y, sw = 0;
+	char player = 'X';
 
-	board[0][0] = '0';
-	board[0][1] = '0';
-	board[0][2] = '0';
+	writef("\n\t################################################\n");
+	writef("\t##################            ##################\n");
+	writef("\t################## GAME START ##################\n");
+	writef("\t##################            ##################\n");
+	writef("\t################################################\n");
+	board[0][0] = ' ';
+	board[0][1] = ' ';
+	board[0][2] = ' ';
 
-	board[1][0] = '0';
-	board[1][1] = 'x';
-	board[1][2] = 'x';
+	board[1][0] = ' ';
+	board[1][1] = ' ';
+	board[1][2] = ' ';
 
-	board[2][0] = '0';
-	board[2][1] = '0';
-	board[2][2] = '0';
-	winner = tricky_check(board);
+	board[2][0] = ' ';
+	board[2][1] = ' ';
+	board[2][2] = ' ';
 
-	writef("The winner is %d\n", winner - '0');
 	tricky_show(board);
 
-	board[0][0] = '1';
-	board[0][1] = '0';
-	board[0][2] = '2';
+	while (winner == ' ')
+	{
+	        writef("\nWrite the coordinates in the format (#row,#column): ");
+		try
+		  readf!"(%d,%d)\n"(x, y); 
+		catch (ConvException e)
+		{
+		  sw = 1;
+		  writef("Bad entry!\n");
+		  break;
+		}
+		writef("\n");
+		board[x][y] = player;
+		  if (player == 'X')
+		    player = 'O';
+		  else
+		    player = 'X';
 
-	board[1][0] = '0';
-	board[1][1] = '2';
-	board[1][2] = '0';
-
-	board[2][0] = '2';
-	board[2][1] = '0';
-	board[2][2] = '0';
-	winner = tricky_check(board);
-	
-	writef("The winner is %d\n", winner - '0');
-
-	board[0][0] = '1';
-	board[0][1] = '1';
-	board[0][2] = '1';
-
-	board[1][0] = '0';
-	board[1][1] = '0';
-	board[1][2] = '0';
-
-	board[2][0] = '0';
-	board[2][1] = '2';
-	board[2][2] = '2';
-	winner = tricky_check(board);
-	
-	writef("The winner is %d\n", winner - '0');
+		tricky_show(board);
+		winner = tricky_check(board);
+		if (check_table(board) == 1)
+		  break;
+	}
+	if (sw == 1)
+	  return;
+	if (check_table(board) != 1)
+	  writef("WINNER %c\n", winner);
+	else
+	  writef("DRAW\n");
 }
