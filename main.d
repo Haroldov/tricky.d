@@ -110,6 +110,7 @@ void main()
 
 	while (winner == ' ')
 	{
+	        writef("\nTurn of player: %c", player);
 	        writef("\nWrite the coordinates in the format (#row,#column): ");
 		try
 		  readf!"(%d,%d)\n"(x, y); 
@@ -120,7 +121,10 @@ void main()
 		  break;
 		}
 		writef("\n");
-		board[x][y] = player;
+		if (board[x][y] == ' ')
+		  board[x][y] = player;
+		else
+		  continue;
 		  if (player == 'X')
 		    player = 'O';
 		  else
