@@ -46,18 +46,19 @@ void tricky_fill(char plays, char** new_board)
 /* --------------------- */
 void tricky_show(char[3][3] board)
 {
-	writef("\t_________________________________________________\n");
-	writef("\t|\t%c", board[0][0]);
+	writef("\t        A               B               C        \n");
+        writef("\t_________________________________________________\n");
+	writef("1\t|\t%c", board[0][0]);
 	writef("\t|\t%c", board[0][1]);
 	writef("\t|\t%c\t|\n", board[0][2]);
 	writef("\t_________________________________________________\n");
 
-	writef("\t|\t%c", board[1][0]);
+	writef("2\t|\t%c", board[1][0]);
 	writef("\t|\t%c", board[1][1]);
 	writef("\t|\t%c\t|\n", board[1][2]);
 	writef("\t_________________________________________________\n");
 
-	writef("\t|\t%c", board[2][0]);
+	writef("3\t|\t%c", board[2][0]);
 	writef("\t|\t%c", board[2][1]);
 	writef("\t|\t%c\t|\n", board[2][2]);
 	writef("\t_________________________________________________\n");
@@ -86,7 +87,9 @@ void main()
 	char plays = 1;
 	char[3][3] board;
 	char winner = ' ';
-	int x, y, sw = 0;
+	int x, y;
+	char yn;
+	int sw = 0;
 	char player = 'X';
 
 	writef("\n\t################################################\n");
@@ -111,15 +114,22 @@ void main()
 	while (winner == ' ')
 	{
 	        writef("\nTurn of player: %c", player);
-	        writef("\nWrite the coordinates in the format (#row,#column): ");
+	        writef("\nWrite the coordinates in the format numberletter (e.g. 1A): ");
 		try
-		  readf!"(%d,%d)\n"(x, y); 
+		  readf!"%d%c\n"(x, yn); 
 		catch (ConvException e)
 		{
 		  sw = 1;
 		  writef("Bad entry!\n");
 		  break;
 		}
+		x--;
+		writef("%d", yn);
+		if (yn >= 'a')
+		  y = yn - 'a';
+		else
+		  y = yn - 'A';
+		writef("%d", y);
 		writef("\n");
 		if (board[x][y] == ' ')
 		  board[x][y] = player;
