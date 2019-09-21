@@ -124,7 +124,10 @@ void main()
 		if (board[x][y] == ' ')
 		  board[x][y] = player;
 		else
-		  continue;
+		  {
+		    writef("That coordinate is already marked\n");
+		    continue;
+		  }
 		  if (player == 'X')
 		    player = 'O';
 		  else
