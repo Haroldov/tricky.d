@@ -11,12 +11,14 @@ char tricky_check(char[3][3] new_board)
 	for (i = 0; i < 3; i++)
 	{
 		if (new_board[i][0] == new_board[i][1] && new_board[i][1] == new_board[i][2] &&
-				 new_board[i][0] == new_board[i][2])
+				 new_board[i][0] == new_board[i][2] && new_board[i][0] != ' ' &&
+				 new_board[i][1] != ' ' && new_board[i][2] != ' ')
 		{
 			return (new_board[i][0]);
 		}
-		if (new_board[0][i] == new_board[0][i] && new_board[1][i] == new_board[2][i] &&
-				new_board[i][0] == new_board[2][i])
+		if (new_board[0][i] == new_board[1][i] && new_board[1][i] == new_board[2][i] &&
+				new_board[0][i] == new_board[2][i] && new_board[0][i] != ' ' &&
+				new_board[1][i] != ' ' && new_board[2][i] != ' ')
 		{
 			return (new_board[0][i]);
 		}
@@ -129,6 +131,7 @@ void main()
 		else
 		  y = yn - 'A';
 		writef("\n");
+		writef("%d, %d\n", x, y);
 		if (board[x][y] == ' ')
 		  board[x][y] = player;
 		else
