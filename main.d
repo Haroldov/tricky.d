@@ -131,7 +131,6 @@ void main()
 		else
 		  y = yn - 'A';
 		writef("\n");
-		writef("%d, %d\n", x, y);
 		if (board[x][y] == ' ')
 		  board[x][y] = player;
 		else
